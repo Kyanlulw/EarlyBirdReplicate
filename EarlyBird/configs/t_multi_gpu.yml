@@ -7,4 +7,4 @@ trainer:
       find_unused_parameters: True
 data:
   init_args:
-    num_workers: 16
+    num_workers: 4
