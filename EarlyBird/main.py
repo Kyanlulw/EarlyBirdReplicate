@@ -47,8 +47,6 @@ class WorldTrackModel(pl.LightningModule):
         self.max_detections = max_detections
         self.D, self.DMIN, self.DMAX = depth
         self.conf_threshold = conf_threshold
-        self.wandb_logger = WandbLogger(project="Early_bird", log_model = "all")
-        self.trainer = Trainer(logger=self.wandb_logger)
 
         # Loss
         self.center_loss_fn = FocalLoss()
@@ -330,15 +328,19 @@ class WorldTrackModel(pl.LightningModule):
         center_e = output['instance_center']
         center_g = target['center_bev']
 
-        # save plots to tensorboard in eval loop
-        writer = self.logger.experiment
+        # Create the figure as you did before
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
         ax1.imshow(center_g[0].sigmoid().squeeze().cpu().numpy(), cmap='hot', interpolation='nearest')
         ax2.imshow(center_e[0].sigmoid().squeeze().cpu().numpy(), cmap='hot', interpolation='nearest')
         ax1.set_title('center_g')
         ax2.set_title('center_e')
         plt.tight_layout()
-        writer.add_figure(f'plot/{batch_idx}', fig, global_step=self.global_step)
+
+        # CORRECT WAY TO LOG IMAGES IN WANDB via LIGHTNING
+        # We use self.logger.log_image or access experiment.log
+        if isinstance(self.logger, WandbLogger):
+            self.logger.log_image(key=f"plot/batch_{batch_idx}", images=[fig])
+        
         plt.close(fig)
 
     def configure_optimizers(self):
@@ -361,5 +363,9 @@ if __name__ == '__main__':
             parser.link_arguments("model.resolution", "data.init_args.resolution")
             parser.link_arguments("model.bounds", "data.init_args.bounds")
 
-
-    cli = MyLightningCLI(WorldTrackModel)
+    cli = MyLightningCLI(
+        WorldTrackModel,
+        trainer_defaults={
+            "logger": WandbLogger(project="Early_bird", log_model="all")
+        }
+    )
