@@ -2,6 +2,9 @@ import os.path as osp
 
 import torch
 import lightning as pl
+import wandb
+from lightning.pytorch.loggers import WandbLogger
+from lightning.pytorch import Trainer
 import matplotlib.pyplot as plt
 import numpy as np
 import json
@@ -14,6 +17,8 @@ from utils import vox, basic, decode
 from evaluation.mod import modMetricsCalculator
 from evaluation.mot_bev import mot_metrics_pedestrian
 from nuscenes.eval.common.config import config_factory
+
+wandb.login("42fb87a574e4ec1517addb3680666c1a1d47a7bf")
 
 class WorldTrackModel(pl.LightningModule):
     def __init__(
@@ -41,6 +46,8 @@ class WorldTrackModel(pl.LightningModule):
         self.max_detections = max_detections
         self.D, self.DMIN, self.DMAX = depth
         self.conf_threshold = conf_threshold
+        self.wandb_logger = WandbLogger(project="Early_bird", log_model = "all")
+        self.trainer = Trainer(logger=self.wandb_logger)
 
         # Loss
         self.center_loss_fn = FocalLoss()
@@ -196,8 +203,8 @@ class WorldTrackModel(pl.LightningModule):
             self.log(f'train/{key}', value, batch_size=B)
         for key, value in stats_dict.items():
             self.log(f'stats/{key}', value, batch_size=B)
-
         return total_loss
+
 
     def validation_step(self, batch, batch_idx):
         item, target = batch
