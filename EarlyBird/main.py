@@ -18,7 +18,8 @@ from evaluation.mod import modMetricsCalculator
 from evaluation.mot_bev import mot_metrics_pedestrian
 from nuscenes.eval.common.config import config_factory
 
-wandb.login("42fb87a574e4ec1517addb3680666c1a1d47a7bf")
+
+wandb.login()
 
 class WorldTrackModel(pl.LightningModule):
     def __init__(
