@@ -363,9 +363,26 @@ if __name__ == '__main__':
             parser.link_arguments("model.resolution", "data.init_args.resolution")
             parser.link_arguments("model.bounds", "data.init_args.bounds")
 
+   if __name__ == '__main__':
+    from lightning.pytorch.cli import LightningCLI
+    
+    torch.set_float32_matmul_precision('medium')
+
+    class MyLightningCLI(LightningCLI):
+        def add_arguments_to_parser(self, parser):
+            parser.link_arguments("model.resolution", "data.init_args.resolution")
+            parser.link_arguments("model.bounds", "data.init_args.bounds")
+
+    # CORRECT WAY: Pass a dictionary (blueprint), not an object
     cli = MyLightningCLI(
         WorldTrackModel,
         trainer_defaults={
-            "logger": WandbLogger(project="Early_bird", log_model="all")
+            "logger": {
+                "class_path": "lightning.pytorch.loggers.WandbLogger",
+                "init_args": {
+                    "project": "Early_bird",
+                    "log_model": "all"
+                }
+            }
         }
     )
