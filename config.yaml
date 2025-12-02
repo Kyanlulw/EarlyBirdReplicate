@@ -1,0 +1,138 @@
+_instantiator:
+    value: lightning.pytorch.cli.instantiate_module
+_wandb:
+    value:
+        cli_version: 0.21.0
+        e:
+            2ukvfscgr3otlev1ewuuhn918axq95b3:
+                args:
+                    - fit
+                    - -c
+                    - configs/t_fit.yml
+                    - -c
+                    - configs/d_wildtrack.yml
+                    - -c
+                    - configs/t_multi_gpu.yml
+                codePath: EarlyBird/main.py
+                codePathLocal: main.py
+                cpu_count: 2
+                cpu_count_logical: 4
+                cudaVersion: "12.8"
+                disk:
+                    /:
+                        total: "8656922775552"
+                        used: "7064000569344"
+                email: datlc81@gmail.com
+                executable: /usr/bin/python3
+                git:
+                    commit: 37c8f90beee0674baaf8d6d8fa59e4c6b2133974
+                    remote: https://github.com/Kyanlulw/EarlyBirdReplicate.git
+                gpu: Tesla T4
+                gpu_count: 2
+                gpu_nvidia:
+                    - architecture: Turing
+                      cudaCores: 2560
+                      memoryTotal: "16106127360"
+                      name: Tesla T4
+                      uuid: GPU-33f1b3d3-eb73-baf9-f4e0-89ecf8d0937f
+                    - architecture: Turing
+                      cudaCores: 2560
+                      memoryTotal: "16106127360"
+                      name: Tesla T4
+                      uuid: GPU-a8d5fb9f-eb6e-b4ba-e778-493ef0f8bffa
+                host: 29f471035afb
+                memory:
+                    total: "33662472192"
+                os: Linux-6.6.105+-x86_64-with-glibc2.35
+                program: /kaggle/working/EarlyBirdReplicate/EarlyBird/main.py
+                python: CPython 3.11.13
+                root: .
+                startedAt: "2025-11-29T07:35:09.525837Z"
+                writerId: 2ukvfscgr3otlev1ewuuhn918axq95b3
+        m:
+            - "1": trainer/global_step
+              "6":
+                - 3
+              "7": []
+            - "2": '*'
+              "5": 1
+              "6":
+                - 1
+              "7": []
+        python_version: 3.11.13
+        t:
+            "1":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 63
+                - 71
+                - 79
+                - 105
+                - 106
+            "2":
+                - 1
+                - 5
+                - 11
+                - 41
+                - 49
+                - 51
+                - 53
+                - 63
+                - 71
+                - 79
+                - 105
+                - 106
+            "3":
+                - 7
+                - 66
+            "4": 3.11.13
+            "5": 0.21.0
+            "6": 4.53.3
+            "8":
+                - 2
+            "12": 0.21.0
+            "13": linux-x86_64
+bounds:
+    value:
+        - 0
+        - 1440
+        - 0
+        - 480
+        - 0
+        - 200
+conf_threshold:
+    value: 0.4
+depth:
+    value:
+        - 100
+        - 0
+        - 2000
+encoder_name:
+    value: res18
+gating_threshold:
+    value: 1000
+learning_rate:
+    value: 0.001
+max_detections:
+    value: 60
+model_name:
+    value: mvdet
+num_cameras:
+    value: 7
+num_ids:
+    value: 1201
+resolution:
+    value:
+        - 120
+        - 2
+        - 360
+scene_centroid:
+    value:
+        - 0
+        - 0
+        - 0
